@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 1079525304}
   - component: {fileID: 1079525303}
   - component: {fileID: 1079525307}
+  - component: {fileID: 1079525308}
   m_Layer: 0
   m_Name: IA
   m_TagString: Untagged
@@ -611,6 +612,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5305f93d5883940a9fe1d136c2c6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 1079525308}
+  tempoEsperar: 2
+  waypoint1: {fileID: 2035759582}
+  waypoint2: {fileID: 2006722807}
+  waypoint3: {fileID: 691920731}
+  distanciaMinimaWaypoint: 1.5
+  distanciaMinimaPerserguicao: 5
+--- !u!195 &1079525308
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079525302}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1342895502
 GameObject:
   m_ObjectHideFlags: 0

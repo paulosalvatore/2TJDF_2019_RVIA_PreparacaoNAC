@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,15 +30,119 @@ public class MaquinaEstado : MonoBehaviour
     private float distanciaWaypointAtual;
 
     // Perseguir
-    public float distanciaMinimaPerserguicao = 5f;
+    public float distanciaMinimaPerseguicao = 5f;
     private float distanciaAtualPlayer;
     private GameObject player;
 
+    private Transform target;
+
     private void Start()
     {
+        Esperar();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void Esperar()
+    {
+        estadoAtual = Estados.Esperar;
+        tempoEsperando = Time.time;
     }
 
     private void Update()
     {
+        if (PossuiVisaoJogador())
+        {
+            Perseguir();
+        }
+
+        switch (estadoAtual)
+        {
+            case Estados.Esperar:
+                target = transform;
+
+                if (EsperouTempoSuficiente())
+                {
+                    Patrulhar();
+                }
+
+                break;
+            case Estados.Patrulhar:
+                target = waypointAtual;
+
+                if (PertoWaypointAtual())
+                {
+                    AlterarWaypoint();
+                }
+
+                break;
+            case Estados.Perseguir:
+                target = player.transform;
+
+                if (!PossuiVisaoJogador())
+                {
+                    Esperar();
+                }
+
+                break;
+        }
+
+        //if (target != null)
+        //{
+        //    navMeshAgent.destination = target.position;
+        //}
+
+        navMeshAgent.destination = target?.position ?? navMeshAgent.destination;
+    }
+
+    private void Perseguir()
+    {
+        estadoAtual = Estados.Perseguir;
+    }
+
+    private bool PossuiVisaoJogador()
+    {
+        distanciaAtualPlayer = Vector3.Distance(
+            transform.position,
+            player.transform.position
+        );
+
+        return distanciaAtualPlayer <= distanciaMinimaPerseguicao;
+    }
+
+    private void AlterarWaypoint()
+    {
+        if (waypointAtual == waypoint1)
+        {
+            waypointAtual = waypoint2;
+        }
+        else if (waypointAtual == waypoint2)
+        {
+            waypointAtual = waypoint3;
+        }
+        else if (waypointAtual == waypoint3)
+        {
+            waypointAtual = waypoint1;
+        }
+    }
+
+    private bool PertoWaypointAtual()
+    {
+        distanciaWaypointAtual = Vector3.Distance(
+            transform.position,
+            waypointAtual.position
+        );
+
+        return distanciaWaypointAtual <= distanciaMinimaWaypoint;
+    }
+
+    private void Patrulhar()
+    {
+        estadoAtual = Estados.Patrulhar;
+    }
+
+    private bool EsperouTempoSuficiente()
+    {
+        return tempoEsperando + tempoEsperar <= Time.time;
     }
 }
