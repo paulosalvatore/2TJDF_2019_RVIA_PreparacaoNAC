@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MaquinaEstado : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class MaquinaEstado : MonoBehaviour
     }
 
     private Estados estadoAtual;
+
+    public NavMeshAgent navMeshAgent;
 
     // Esperar
     public float tempoEsperar = 2f;
