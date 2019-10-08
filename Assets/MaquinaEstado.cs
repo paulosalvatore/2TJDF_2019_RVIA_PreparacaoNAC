@@ -38,9 +38,11 @@ public class MaquinaEstado : MonoBehaviour
 
     private void Start()
     {
-        Esperar();
-
         player = GameObject.FindGameObjectWithTag("Player");
+
+        waypointAtual = waypoint1;
+
+        Esperar();
     }
 
     private void Esperar()
